@@ -50,12 +50,14 @@
 #           [SOURCE_LIBRARIES <library list>]
 #           [SERVICE_LIBRARIES <library list>]
 #           [DICT_LIBRARIES <library list>]
+#           [DICT_COMPILE_FLAGS <flag list>]
 #           [SUBDIRS <source subdirectory>] (e.g., detail)
 #           [EXCLUDE <ignore these files>]
 #           [WITH_STATIC_LIBRARY]
 #           [BASENAME_ONLY] (passed to simple_plugin)
 #           [NO_PLUGINS]
 #           [DICT_FUNCTIONS]
+#           [USE_PRODUCT_NAME]
 #         )
 #
 # * In art_make(), LIBRARIES has been REMOVED! use LIB_LIBRARIES instead.
@@ -67,13 +69,19 @@
 # encountered.
 #
 # * DICT_FUNCTIONS, if present, is passed to art_dictionary().
+# * DICT_COMPILE_FLAGS, if present, are passed to art_dictionary().
 #
 # art_make_library( [LIBRARY_NAME <library name>]  
 #                   SOURCE <source code list>
 #                   [LIBRARIES <library list>] 
 #                   [WITH_STATIC_LIBRARY]
 #                   [NO_INSTALL]
+#                   [USE_PRODUCT_NAME]
 #                   [LIBRARY_NAME_VAR <var_name>] )
+#
+# * if USE_PRODUCT_NAME is specified, the product name will be prepended
+#   to the calculated library name 
+# * USE_PRODUCT_NAME and LIBRARY_NAME are mutually exclusive
 #
 # * If LIBRARY_NAME_VAR is specified, then that variable will be set to
 # contain the final name of the library.
@@ -115,6 +123,11 @@ macro( _art_simple_plugin file type liblist )
   STRING( REGEX REPLACE "^${CMAKE_CURRENT_SOURCE_DIR}/(.*)_${type}.cc" "\\1" plugbase "${file}" )
   #message(STATUS "_art_simple_plugin: have ${type} plugin ${plugbase}")
   #message(STATUS "_art_simple_plugin: AM_BASENAME_ONLY is ${AM_BASENAME_ONLY}")
+  if (AM_USE_PRODUCT_NAME)
+    set( plugbase ${product}_${plugbase} )
+    _debug_message("Configured to build plugin ${plugbase} of type ${type} with USE_PRODUCT_NAME.")
+    #message(STATUS "_art_simple_plugin debug:  calculated plugin base name is now ${plugbase} for ${product}")
+  endif()
   if( AM_BASENAME_ONLY )
     _debug_message("Configured to build plugin ${plugbase} of type ${type} with BASENAME_ONLY.")
     simple_plugin( ${plugbase} ${type} ${liblist} BASENAME_ONLY )
@@ -152,16 +165,31 @@ endmacro( art_make_test )
 # art_make_library
 ####################################
 function( art_make_library )
-  cet_parse_args( AML "LIBRARY_NAME;LIBRARY_NAME_VAR;LIBRARIES;SOURCE" "" ${ARGN})
-  set(art_make_library_usage "USAGE: art_make_library( SOURCE <source code list> [LIBRARY_NAME <library name>] [LIBRARIES <library list>] [WITH_STATIC_LIBRARY] [NO_INSTALL] [LIBRARY_NAME_VAR <var>])")
+  cet_parse_args( AML "LIBRARY_NAME;LIBRARY_NAME_VAR;LIBRARIES;SOURCE" "USE_PRODUCT_NAME" ${ARGN})
+  set(art_make_library_usage "USAGE: art_make_library( SOURCE <source code list> [LIBRARY_NAME <library name>] [LIBRARIES <library list>] [WITH_STATIC_LIBRARY] [NO_INSTALL] [USE_PRODUCT_NAME] [LIBRARY_NAME_VAR <var>])")
+
+  # use either LIBRARY_NAME or USE_PRODUCT_NAME, not both
+  if (AML_USE_PRODUCT_NAME AND AML_LIBRARY_NAME)
+    message(FATAL_ERROR "ART_MAKE_LIBRARY: USE_PRODUCT_NAME and LIBRARY_NAME are mutually exclusive.")
+  endif()
+
   # you must supply a source code list
   if( AML_SOURCE )
     if( AML_LIBRARY_NAME )
       set (art_make_lib_name ${AML_LIBRARY_NAME})
     else()
       # calculate base name
-      STRING( REGEX REPLACE "^${CMAKE_SOURCE_DIR}/(.*)" "\\1" CURRENT_SUBDIR "${CMAKE_CURRENT_SOURCE_DIR}" )
-      STRING( REGEX REPLACE "/" "_" art_make_lib_name "${CURRENT_SUBDIR}" )
+      if( DEFINED ENV{MRB_SOURCE} )
+         STRING( REGEX REPLACE "^${CMAKE_SOURCE_DIR}/${product}/(.*)" "\\1" CURRENT_SUBDIR "${CMAKE_CURRENT_SOURCE_DIR}" )
+         STRING( REGEX REPLACE "/" "_" art_make_lib_name "${CURRENT_SUBDIR}" )
+      else()
+         STRING( REGEX REPLACE "^${CMAKE_SOURCE_DIR}/(.*)" "\\1" CURRENT_SUBDIR "${CMAKE_CURRENT_SOURCE_DIR}" )
+         STRING( REGEX REPLACE "/" "_" art_make_lib_name "${CURRENT_SUBDIR}" )
+      endif()
+      if (AML_USE_PRODUCT_NAME)
+	set( art_make_lib_name ${product}_${art_make_lib_name} )
+	#message(STATUS "art_make_library debug:  calculated library name is now ${art_make_lib_name} for ${product}")
+      endif()
     endif()
     if (AML_LIBRARIES)
       set(al LIBRARIES)
@@ -186,7 +214,7 @@ endfunction( art_make_library )
 ####################################
 function( art_make )
   set(arg_option_names
-    LIBRARY_NAME LIBRARIES SUBDIRS EXCLUDE SOURCE LIB_LIBRARIES DICT_LIBRARIES
+    LIBRARY_NAME LIBRARIES SUBDIRS EXCLUDE SOURCE LIB_LIBRARIES DICT_LIBRARIES DICT_COMPILE_FLAGS
     MODULE_LIBRARIES SERVICE_LIBRARIES SOURCE_LIBRARIES)
   set(plugin_types source module service) # Defaults
   # Add DICT_LIBRARIES, MODULE_LIBRARIES, GENERATOR_LIBRARIES, etc. as
@@ -207,7 +235,13 @@ function( art_make )
     list(APPEND plugin_glob_list "*_${plugin_type}.cc")
   endforeach()
   set(art_file_list "")
-  cet_parse_args( AM "${arg_option_names}" "WITH_STATIC_LIBRARY;BASENAME_ONLY;NO_PLUGINS;DICT_FUNCTIONS" ${ARGN})
+  cet_parse_args( AM "${arg_option_names}" "WITH_STATIC_LIBRARY;BASENAME_ONLY;NO_PLUGINS;DICT_FUNCTIONS;USE_PRODUCT_NAME" ${ARGN})
+
+  # has the cmake variable ART_MAKE_PREPEND_PRODUCT_NAME been specified?
+  if( ART_MAKE_PREPEND_PRODUCT_NAME )
+    set( AM_USE_PRODUCT_NAME TRUE )
+  endif()
+
   if (AM_DICT_FUNCTIONS)
     set(AM_DICT_FUNCTIONS DICT_FUNCTIONS)
   else()
@@ -220,6 +254,13 @@ Use EXCLUDE to exclude particular (eg exec) source files from library.")
 
   if(AM_LIBRARIES)
     message(FATAL_ERROR "ART_MAKE: LIBRARIES is ambiguous -- use {LIB,DICT,SERVICE,MODULE,SOURCE,XXX}_LIBRARIES, instead.")
+  endif()
+
+  if (AM_USE_PRODUCT_NAME AND AM_LIBRARY_NAME)
+    message(FATAL_ERROR "ART_MAKE: USE_PRODUCT_NAME and LIBRARY_NAME are mutually exclusive.")
+  endif()
+  if (AM_USE_PRODUCT_NAME AND AM_BASENAME_ONLY)
+    message(FATAL_ERROR "ART_MAKE: USE_PRODUCT_NAME and BASENAME_ONLY are mutually exclusive.")
   endif()
 
   # check for extra link libraries
@@ -283,6 +324,9 @@ Use EXCLUDE to exclude particular (eg exec) source files from library.")
     endif()
   endforeach(file)
   #message(STATUS "art_make debug: known files ${art_file_list}")
+  if (AM_USE_PRODUCT_NAME)
+    set(upn USE_PRODUCT_NAME)
+  endif()
 
   if( have_library )
     if (AM_LIBRARY_NAME)
@@ -294,7 +338,7 @@ Use EXCLUDE to exclude particular (eg exec) source files from library.")
     if (art_liblist)
       set(al LIBRARIES)
     endif()
-    art_make_library(${wsl} ${ln} ${AM_LIBRARY_NAME} ${al} ${art_liblist} SOURCE ${art_make_library_src}
+    art_make_library(${wsl} ${upn} ${ln} ${AM_LIBRARY_NAME} ${al} ${art_liblist} SOURCE ${art_make_library_src}
       LIBRARY_NAME_VAR art_make_library_name
       )
     foreach(sfile ${art_make_library_src})
@@ -328,10 +372,13 @@ Use EXCLUDE to exclude particular (eg exec) source files from library.")
       set(art_make_dict_libraries ${art_make_library_name})
     endif()
     list(APPEND art_make_dict_libraries ${AM_DICT_LIBRARIES})
+    if (AM_DICT_COMPILE_FLAGS)
+      set(art_dictionary_flags COMPILE_FLAGS ${AM_DICT_COMPILE_FLAGS})
+    endif()
     if(art_make_dict_libraries)
-      art_dictionary( DICTIONARY_LIBRARIES ${AM_DICT_FUNCTIONS} ${art_make_dict_libraries} DICT_NAME_VAR dictname)
+      art_dictionary( DICTIONARY_LIBRARIES ${AM_DICT_FUNCTIONS} ${art_make_dict_libraries} ${art_dictionary_flags} ${upn} DICT_NAME_VAR dictname)
     else()
-      art_dictionary( ${AM_DICT_FUNCTIONS} DICT_NAME_VAR dictname)
+      art_dictionary( ${AM_DICT_FUNCTIONS} ${art_dictionary_flags} ${upn} DICT_NAME_VAR dictname)
     endif()
     if (cet_generated_code) # Bubble up to top scope.
       set(cet_generated_code ${cet_generated_code} PARENT_SCOPE)
