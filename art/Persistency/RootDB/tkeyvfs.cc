@@ -9,6 +9,11 @@
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 #pragma GCC diagnostic ignored "-Wunused-variable"
 
+// Clang workaround for error on narrowing of SQLITE_FCNTL_DB_UNCHANGED
+#if defined (__clang__)
+#pragma clang diagnostic ignored "-Wc++11-narrowing"
+#endif
+
 extern "C" {
 #include <sqlite3.h>
 }

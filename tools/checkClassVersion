@@ -134,8 +134,16 @@ def main():
                        help="instead of issuing errors, generate a new classes_def.xml file.")
     oparser.add_option("-G","--generate-in-place",dest="generate_in_place", action="store_true",default=False,
                        help="Update the classes_def.xml file in place.")
+    oparser.add_option("-L",metavar="PATH",
+                       dest="dynamic_path",
+                       action="append",
+                       help="Prepend PATH to dynamic loader path")
 
     (options,args)=oparser.parse_args()
+
+    if options.dynamic_path:
+      newDynamicPath = ":".join(options.dynamic_path) + ":" + ROOT.gSystem.GetDynamicPath()
+      ROOT.gSystem.SetDynamicPath(newDynamicPath)
 
     if options.library is None:
         if 0 != ROOT.gSystem.Load("libart_Framework_Core"):

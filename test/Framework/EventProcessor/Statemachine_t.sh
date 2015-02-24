@@ -11,6 +11,7 @@ EOF
 }
 
 # Source functions.
+# Oh for **** sake...
 . cet_test_functions.sh
 
 # Process arguments.

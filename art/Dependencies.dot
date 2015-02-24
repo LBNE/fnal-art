@@ -1,0 +1,177 @@
+digraph art {
+  Framework_Art -> Framework_IO_Root;
+  Framework_Art -> Framework_EventProcessor;
+  Framework_Art -> Framework_Core;
+  Framework_Art -> Framework_Services_Registry;
+  Framework_Art -> Persistency_Common;
+  Framework_Art -> Persistency_Provenance;
+  Framework_Art -> Utilities;
+
+  Framework_IO_Root -> Framework_Core;
+  Framework_IO_Root -> Framework_IO;
+  Framework_IO_Root -> Framework_IO_Catalog;
+  Framework_IO_Root -> Framework_Principal;
+  Framework_IO_Root -> Framework_Services_Registry;
+  Framework_IO_Root -> Persistency_Common;
+  Framework_IO_Root -> Persistency_Provenance;
+  Framework_IO_Root -> Framework_IO_RootVersion;
+
+  Framework_EventProcessor -> Framework_Services_System_CurrentModule_service;
+  Framework_EventProcessor -> Framework_Services_System_FileCatalogMetadata_service;
+  Framework_EventProcessor -> Framework_Services_System_FloatingPointControl_service;
+  Framework_EventProcessor -> Framework_Services_System_PathSelection_service;
+  Framework_EventProcessor -> Framework_Services_System_ScheduleContext_service;
+  Framework_EventProcessor -> Framework_Services_System_TriggerNamesService_service;
+  Framework_EventProcessor -> Framework_Core;
+  Framework_EventProcessor -> Utilities;
+
+  Framework_Core -> Framework_Services_System_CurrentModule_service;
+  Framework_Core -> Framework_Services_System_TriggerNamesService_service;
+  Framework_Core -> Framework_Services_Optional_RandomNumberGenerator_service;
+  Framework_Core -> Framework_Principal;
+  Framework_Core -> Persistency_Common;
+  Framework_Core -> Persistency_Provenance;
+  Framework_Core -> Framework_Services_Registry;
+  Framework_Core -> Utilities;
+  Framework_Core -> Version;
+
+  Framework_Services_Registry -> Utilities;
+
+  Persistency_Common -> Persistency_Provenance;
+  Persistency_Common -> Utilities;
+
+  Persistency_Provenance -> Persistency_RootDB;
+  Persistency_Provenance -> Utilities;
+
+  Persistency_RootDB -> Utilities;
+
+  Utilities;
+
+  Version;
+
+  Framework_IO -> Persistency_Provenance;
+
+  Framework_IO_Catalog -> Framework_Services_Optional_TrivialFileDelivery_service;
+  Framework_IO_Catalog -> Framework_Services_Optional_TrivialFileTransfer_service;
+  Framework_IO_Catalog -> Utilities;
+
+  Framework_IO_ProductMix -> Framework_IO_Root;
+  Framework_IO_ProductMix -> Framework_Services_System_CurrentModule_service
+  Framework_IO_ProductMix -> Framework_Services_System_TriggerNamesService_service
+  Framework_IO_ProductMix -> Framework_Services_Optional_RandomNumberGenerator_service
+  Framework_IO_ProductMix -> Framework_Core
+  Framework_IO_ProductMix -> Framework_Principal
+  Framework_IO_ProductMix -> Framework_Services_Registry
+  Framework_IO_ProductMix -> Persistency_Common
+  Framework_IO_ProductMix -> Persistency_Provenance
+  Framework_IO_ProductMix -> Utilities
+
+  Framework_IO_Sources -> Framework_Services_FileServiceInterfaces
+  Framework_IO_Sources -> Framework_Services_Registry
+  Framework_IO_Sources -> Framework_Principal
+  Framework_IO_Sources -> Persistency_Common
+  Framework_IO_Sources -> Persistency_Provenance
+  Framework_IO_Sources -> Utilities
+
+  Framework_Principal -> Persistency_Provenance;
+  Framework_Principal -> Persistency_Common;
+  Framework_Principal -> Framework_Services_Registry;
+  Framework_Principal -> Utilities;
+  Framework_Principal -> Version;
+
+  Framework_IO_RootVersion;
+
+  Framework_Services_System_CurrentModule_service -> Persistency_Provenance;
+
+  Framework_Services_System_FileCatalogMetadata_service;
+
+  Framework_Services_System_FloatingPointControl_service;
+
+  Framework_Services_System_PathSelection_service -> Framework_Core;
+
+  Framework_Services_System_ScheduleContext_service -> Framework_Core;
+
+  Framework_Services_System_TriggerNamesService_service;
+
+  Framework_Services_Optional_RandomNumberGenerator_service -> Framework_Principal;
+  Framework_Services_Optional_RandomNumberGenerator_service -> Persistency_Common;
+
+  Framework_Services_Optional_TrivialFileDelivery_service;
+
+  Framework_Services_Optional_TrivialFileTransfer_service;
+
+
+  Framework_Services_Optional;
+
+  Framework_Services_Optional_SimpleInteraction_ervice -> Framework_Services_UserInteraction;
+
+  Framework_Services_Optional_SimpleMemoryCheck_service -> Persistency_Provenance;
+
+  Framework_Services_Optional_TFileService_service -> Framework_Services_System_TriggerNamesService_service;
+  Framework_Services_Optional_TFileService_service -> Framework_Services_Optional;
+  Framework_Services_Optional_TFileService_service -> Framework_IO;
+  Framework_Services_Optional_TFileService_service -> Framework_Principal;
+
+  Framework_Services_Optional_Timing_service -> Persistency_Provenance;
+
+  Framework_Services_Optional_Tracer_service -> Persistency_Provenance;
+
+  Framework_Services_FileServiceInterfaces -> Framework_Services_Registry;
+
+  Framework_Services_UserInteraction -> Framework_Core;
+  Framework_Services_UserInteraction -> Framework_Principal;
+  Framework_Services_UserInteraction -> Persistency_Provenance;
+  Framework_Services_UserInteraction -> Framework_Services_Registry;
+
+  Ntuple;
+
+  Framework_IO_Root_RootInput_source -> Framework_IO_Root;
+  Framework_IO_Root_RootInput_source -> Framework_IO_Catalog;
+
+  Framework_IO_Root_RootOutput_module -> Framework_IO_Root;
+
+  config_dumper -> Framework_IO_Root;
+  config_dumper -> Utilities;
+  config_dumper -> Framework_Core;
+
+  sam_metadata_dumper -> Framework_IO_Root;
+  sam_metadata_dumper -> Utilities;
+  sam_metadata_dumper -> Framework_Core;
+
+  Framework_Modules_BlockingPrescaler_module -> Framework_Core;
+  Framework_Modules_BlockingPrescaler_module -> Framework_Principal;
+  Framework_Modules_BlockingPrescaler_module -> Persistency_Common;
+  Framework_Modules_BlockingPrescaler_module -> Persistency_Provenance;
+  Framework_Modules_BlockingPrescaler_module -> Utilities;
+
+  Framework_Modules_EmptyEvent_source -> Framework_Core;
+  Framework_Modules_EmptyEvent_source -> Framework_Principal;
+  Framework_Modules_EmptyEvent_source -> Persistency_Common;
+  Framework_Modules_EmptyEvent_source -> Persistency_Provenance;
+  Framework_Modules_EmptyEvent_source -> Utilities;
+
+  Framework_Modules_FileDumperOutput_module -> Framework_Core;
+  Framework_Modules_FileDumperOutput_module -> Framework_Principal;
+  Framework_Modules_FileDumperOutput_module -> Persistency_Common;
+  Framework_Modules_FileDumperOutput_module -> Persistency_Provenance;
+  Framework_Modules_FileDumperOutput_module -> Utilities;
+
+  Framework_Modules_Prescaler_module -> Framework_Core;
+  Framework_Modules_Prescaler_module -> Framework_Principal;
+  Framework_Modules_Prescaler_module -> Persistency_Common;
+  Framework_Modules_Prescaler_module -> Persistency_Provenance;
+  Framework_Modules_Prescaler_module -> Utilities;
+
+  Framework_Modules_ProvenanceChecker_module -> Framework_Core;
+  Framework_Modules_ProvenanceChecker_module -> Framework_Principal;
+  Framework_Modules_ProvenanceChecker_module -> Persistency_Common;
+  Framework_Modules_ProvenanceChecker_module -> Persistency_Provenance;
+  Framework_Modules_ProvenanceChecker_module -> Utilities;
+
+  Framework_Modules_RandomNumberSaver_module -> Framework_Core;
+  Framework_Modules_RandomNumberSaver_module -> Framework_Principal;
+  Framework_Modules_RandomNumberSaver_module -> Persistency_Common;
+  Framework_Modules_RandomNumberSaver_module -> Persistency_Provenance;
+  Framework_Modules_RandomNumberSaver_module -> Utilities;
+}
+

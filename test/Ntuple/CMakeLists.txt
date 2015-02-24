@@ -1,3 +1,5 @@
+IF (CETBUILDTOOLS) 
+
 cet_test(ntuple_t
   LIBRARIES art_Ntuple art_Utilities ${SQLITE3}
   )
@@ -12,3 +14,10 @@ cet_test( messagefacility_destination_sqlite_t HANDBUILT
   DATAFILES
   sqlite_mfplugin_t.fcl
   )
+
+ELSE()
+
+cet_test(ntuple_t
+         LIBRARIES art_Ntuple ${SQLite3_LIBRARIES}
+         )
+ENDIF()
