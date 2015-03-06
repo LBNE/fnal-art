@@ -105,7 +105,7 @@ BOOST_AUTO_TEST_CASE(TestSignal1_t)
   TestSignal1 s;
   std::string const test_text { "Test text" };
   boost::test_tools::output_test_stream os;
-  s.watch([&test_text](auto& x){ testCallback<0>(x, test_text); });
+  s.watch([&test_text](std::ostream& x){ testCallback<0>(x, test_text); });
   BOOST_CHECK_NO_THROW(s.invoke(os));
   BOOST_CHECK(os.is_equal(test_text));
 }
