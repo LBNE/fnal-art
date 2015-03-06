@@ -24,16 +24,16 @@ namespace art {
 
       using multimap_type = std::multimap<ARGS...>;
 
-      auto begin  () const { return map_.begin  (); }
-      auto end    () const { return map_.end    (); }
-      auto cbegin () const { return map_.cbegin (); }
-      auto cend   () const { return map_.cend   (); }
-      auto crbegin() const { return map_.crbegin(); }
-      auto crend  () const { return map_.crend  (); }
+      auto begin  () const -> typename multimap_type::const_iterator { return map_.begin  (); }
+      auto end    () const -> typename multimap_type::const_iterator { return map_.end    (); }
+      auto cbegin () const -> typename multimap_type::const_iterator  { return map_.cbegin (); }
+      auto cend   () const -> typename multimap_type::const_iterator  { return map_.cend   (); }
+      auto crbegin() const -> typename multimap_type::const_reverse_iterator { return map_.crbegin(); }
+      auto crend  () const -> typename multimap_type::const_reverse_iterator { return map_.crend  (); }
 
-      auto empty() const { return map_.empty(); }
-      auto size () const { return map_.size (); }
-      auto unique_key_limit() const { return SIZE_LIMIT; }
+      bool empty() const { return map_.empty(); }
+      size_t size () const { return map_.size (); }
+      unsigned unique_key_limit() const { return SIZE_LIMIT; }
       void erase( typename multimap_type::const_iterator iter ) { map_.erase(iter); }
 
       using key_type    = typename multimap_type::key_type;
