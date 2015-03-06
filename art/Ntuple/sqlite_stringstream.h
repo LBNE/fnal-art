@@ -71,7 +71,7 @@ namespace sqlite {
     // Inserters
 
     template< typename T>
-    auto convertTo( std::string const & arg ) {
+    T convertTo( std::string const & arg ) {
       return arg;
     }
 
@@ -101,15 +101,15 @@ namespace sqlite {
 
   };
 
-  template<> inline auto stringstream::convertTo<int               >( std::string const & arg ) { return std::stoi  ( arg ); }
-  template<> inline auto stringstream::convertTo<long              >( std::string const & arg ) { return std::stol  ( arg ); }
-  template<> inline auto stringstream::convertTo<long long         >( std::string const & arg ) { return std::stoll ( arg ); }
-  template<> inline auto stringstream::convertTo<unsigned          >( std::string const & arg ) { return std::stoul ( arg ); }
-  template<> inline auto stringstream::convertTo<unsigned long     >( std::string const & arg ) { return std::stoul ( arg ); }
-  template<> inline auto stringstream::convertTo<unsigned long long>( std::string const & arg ) { return std::stoull( arg ); }
-  template<> inline auto stringstream::convertTo<float             >( std::string const & arg ) { return std::stof  ( arg ); }
-  template<> inline auto stringstream::convertTo<double            >( std::string const & arg ) { return std::stod  ( arg ); }
-  template<> inline auto stringstream::convertTo<long double       >( std::string const & arg ) { return std::stold ( arg ); }
+  template<> inline int stringstream::convertTo<int               >( std::string const & arg ) { return std::stoi  ( arg ); }
+  template<> inline long stringstream::convertTo<long              >( std::string const & arg ) { return std::stol  ( arg ); }
+  template<> inline long long stringstream::convertTo<long long         >( std::string const & arg ) { return std::stoll ( arg ); }
+  template<> inline unsigned stringstream::convertTo<unsigned          >( std::string const & arg ) { return std::stoul ( arg ); }
+  template<> inline unsigned long stringstream::convertTo<unsigned long     >( std::string const & arg ) { return std::stoul ( arg ); }
+  template<> inline unsigned long long stringstream::convertTo<unsigned long long>( std::string const & arg ) { return std::stoull( arg ); }
+  template<> inline float stringstream::convertTo<float             >( std::string const & arg ) { return std::stof  ( arg ); }
+  template<> inline double stringstream::convertTo<double            >( std::string const & arg ) { return std::stod  ( arg ); }
+  template<> inline long double stringstream::convertTo<long double       >( std::string const & arg ) { return std::stold ( arg ); }
 
 } // namespace sqlite
 

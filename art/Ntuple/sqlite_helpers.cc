@@ -94,40 +94,40 @@ namespace sqlite
   //=======================================================================
   void deleteTable( sqlite3* db, std::string const& tname )
   {
-    exec( db, "delete from "s + tname );
+    exec( db, std::string("delete from ") + tname );
   }
 
   void dropTable( sqlite3* db, std::string const& tname )
   {
-    exec( db, "drop table "s+ tname );
+    exec( db, std::string("drop table ") + tname );
   }
 
   //=======================================================================
   // Statistics helpers
 
   double mean( sqlite3* db, const std::string& tname, const std::string& colname ){
-    return query_db<double>( db, "select avg("s+colname+") from "s + tname );
+    return query_db<double>( db, std::string("select avg(")+colname+std::string(") from ") + tname );
   }
 
   double median( sqlite3* db, const std::string& tname, const std::string& colname ){
     return query_db<double>( db,
-                             "select avg("s+colname+")"s+
-                             " from (select "s+colname+
-                             " from "s+tname+
-                             " order by "s+colname+
-                             " limit 2 - (select count(*) from "s + tname+") % 2"s+
-                             " offset (select (count(*) - 1) / 2"s+
-                             " from "s + tname+"))"s );
+                             std::string("select avg(")+colname+std::string(")")+
+                             std::string(" from (select ")+colname+
+                             std::string(" from ")+tname+
+                             std::string(" order by ")+colname+
+                             std::string(" limit 2 - (select count(*) from ") + tname+std::string(") % 2")+
+                             std::string(" offset (select (count(*) - 1) / 2")+
+                             std::string(" from ") + tname+ std::string("))") );
   }
 
   double rms( sqlite3* db, const std::string& tname, const std::string& colname ){
     double const ms = query_db<double>( db,
-                                        "select sum("s+
-                                        "("s + colname + "-(select avg("s + colname + ") from "s + tname +"))"s +
-                                        "*"s +
-                                        "("s + colname + "-(select avg("s + colname + ") from "s + tname +"))"s +
-                                        " ) /"s +
-                                        "(count("s + colname +")) from "s + tname );
+                                        std::string("select sum(")+
+                                        std::string("(") + colname + std::string("-(select avg(") + colname + std::string(") from ") + tname + std::string("))") +
+                                        std::string("*") +
+                                        std::string("(") + colname + std::string("-(select avg(") + colname + std::string(") from ") + tname + std::string("))") +
+                                        std::string(" ) /") +
+                                        std::string("(count(") + colname +std::string(")) from ") + tname );
     return std::sqrt( ms );
   }
 
