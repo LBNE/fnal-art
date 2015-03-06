@@ -40,8 +40,13 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
 using fhicl::ParameterSet;
+
+template<typename T, typename ...Args>
+std::unique_ptr<T> make_unique( Args&& ...args )
+{
+    return std::unique_ptr<T>( new T( std::forward<Args>(args)... ) );
+}
 
 namespace {
   // Most signals.
@@ -302,13 +307,13 @@ initServices_(ParameterSet const & top_pset,
   ServiceDirector director(std::move(services), areg, token);
 
   // Services requiring special construction.
-  director.addSystemService(std::make_unique<CurrentModule>(areg));
-  director.addSystemService(std::make_unique<TriggerNamesService>
+  director.addSystemService(::make_unique<CurrentModule>(areg));
+  director.addSystemService(::make_unique<TriggerNamesService>
                             (top_pset, pathManager_.triggerPathNames()));
-  director.addSystemService(std::make_unique<FloatingPointControl>(fpc_pset, areg));
-  director.addSystemService(std::make_unique<ScheduleContext>());
+  director.addSystemService(::make_unique<FloatingPointControl>(fpc_pset, areg));
+  director.addSystemService(::make_unique<ScheduleContext>());
   if (!pathSelection.is_empty()) {
-    director.addSystemService(std::make_unique<PathSelection>(*this));
+    director.addSystemService(::make_unique<PathSelection>(*this));
   }
   return std::move(director);
 }
