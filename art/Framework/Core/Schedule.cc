@@ -96,28 +96,28 @@ void
 art::Schedule::
 respondToOpenInputFile(FileBlock const & fb)
 {
-  doForAllWorkers_([&fb](auto w){ w->respondToOpenInputFile(fb); });
+  doForAllWorkers_([&fb](Worker* w){ w->respondToOpenInputFile(fb); });
 }
 
 void
 art::Schedule::
 respondToCloseInputFile(FileBlock const & fb)
 {
-  doForAllWorkers_([&fb](auto w){ w->respondToCloseInputFile(fb); });
+  doForAllWorkers_([&fb](Worker* w){ w->respondToCloseInputFile(fb); });
 }
 
 void
 art::Schedule::
 respondToOpenOutputFiles(FileBlock const & fb)
 {
-  doForAllWorkers_([&fb](auto w){ w->respondToOpenOutputFiles(fb); });
+  doForAllWorkers_([&fb](Worker* w){ w->respondToOpenOutputFiles(fb); });
 }
 
 void
 art::Schedule::
 respondToCloseOutputFiles(FileBlock const & fb)
 {
-  doForAllWorkers_([&fb](auto w){ w->respondToCloseOutputFiles(fb); });
+  doForAllWorkers_([&fb](Worker* w){ w->respondToCloseOutputFiles(fb); });
 }
 
 bool
@@ -153,14 +153,14 @@ void
 art::Schedule::
 beginJob()
 {
-  doForAllWorkers_([](auto w){ w->beginJob(); });
+  doForAllWorkers_([](Worker* w){ w->beginJob(); });
 }
 
 void
 art::Schedule::
 resetAll_()
 {
-  doForAllWorkers_([](auto w){ w->reset(); });
+  doForAllWorkers_([](Worker* w){ w->reset(); });
   triggerPathsInfo_.pathResults().reset();
 }
 

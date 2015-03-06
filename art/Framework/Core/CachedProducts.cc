@@ -70,7 +70,7 @@ wantEvent(Event const& ev)
 
   return any_of(begin(p_and_e_selectors_),
                 end(p_and_e_selectors_),
-                [](auto& s) { return s.match(); });
+                [](decltype(p_and_e_selectors_)::value_type & s) { return s.match(); });
 }
 
 art::Handle<art::TriggerResults>
@@ -96,7 +96,7 @@ getOneTriggerResults(Event const& ev) const
 void
 CachedProducts::
 clearTriggerResults() {
-  for_all(p_and_e_selectors_, [](auto& p) { p.clearTriggerResults(); });
+  for_all(p_and_e_selectors_, [](decltype(p_and_e_selectors_)::value_type & p) { p.clearTriggerResults(); });
   loadDone_ = false;
   numberFound_ = 0;
 }
@@ -112,7 +112,7 @@ loadTriggerResults(Event const& ev)
   // Note: The loadTriggerResults call might throw,
   // so numberFound_ may be less than expected.
   for_all(p_and_e_selectors_,
-          [&,this](auto& s){ s.loadTriggerResults(ev); ++numberFound_;});
+          [&,this](decltype(p_and_e_selectors_)::value_type & s){ s.loadTriggerResults(ev); ++numberFound_;});
 }
 
 

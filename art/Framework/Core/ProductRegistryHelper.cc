@@ -57,7 +57,7 @@ registerProducts(MasterProductRegistry& preg,
     productList_.reset();
   }
   cet::for_all(typeLabelList_,
-	       [&, this](auto const& tl){ addToRegistry(tl, md, preg); });
+	       [&, this](decltype(typeLabelList_)::value_type const& tl){ addToRegistry(tl, md, preg); });
 }
 
 art::TypeLabel const &

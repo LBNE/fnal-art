@@ -97,7 +97,7 @@ namespace art {
   void
   Path::clearCounters() {
     timesRun_ = timesPassed_ = timesFailed_ = timesExcept_ = 0;
-    for_all(workers_, [](auto& w) { w.clearCounters(); });
+    for_all(workers_, [](decltype(workers_)::value_type& w) { w.clearCounters(); });
   }
 
    void Path::findEventModifiers(std::vector<std::string> &foundLabels) const {
