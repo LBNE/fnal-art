@@ -148,7 +148,7 @@ art::detail::ModuleConfigInfoMap
 art::PathManager::
 fillAllModules_()
 {
-  static ParameterSet const empty;
+  static ParameterSet const empty = ParameterSet();
   detail::ModuleConfigInfoMap all_modules;
   std::ostringstream error_stream;
   for (auto const & pathRootName :
