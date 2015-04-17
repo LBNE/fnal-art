@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 set(art_Framework_Services_FileServiceInterfaces_sources
   FileDeliveryStatus.cc
   FileDisposition.cc
@@ -11,3 +14,4 @@ art_make_library(SOURCE ${art_Framework_Services_FileServiceInterfaces_sources}
 
 install_headers(SUBDIRS detail)
 install_source(SUBDIRS detail)
+endif()

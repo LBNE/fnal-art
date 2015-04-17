@@ -1,3 +1,6 @@
+if (ALT_CMAKE)
+include(portableArtDictionary)
+else()
 ########################################################################
 # art_dictionary
 #
@@ -94,3 +97,4 @@ function(art_dictionary)
   #message(STATUS "Calling check_class_version with args ${AD_ARGS}")
   check_class_version(${AD_LIBRARIES} UPDATE_IN_PLACE ${AD_CCV_ARGS})
 endfunction()
+endif()

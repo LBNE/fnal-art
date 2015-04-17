@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 art_make_library( LIBRARY_NAME art_Framework_IO_RootVersion
                   SOURCE GetFileFormatEra.cc GetFileFormatVersion.cc
 )
@@ -44,3 +47,4 @@ art_make_exec( NAME sam_metadata_dumper
 
 install_headers()
 install_source()
+endif()

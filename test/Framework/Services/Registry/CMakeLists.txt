@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 include(CetTest)
 
 link_libraries(
@@ -6,3 +9,4 @@ link_libraries(
 
 cet_test(GlobalSignal_t USE_BOOST_UNIT)
 cet_test(LocalSignal_t USE_BOOST_UNIT)
+endif()

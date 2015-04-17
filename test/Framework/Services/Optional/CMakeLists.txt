@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 add_subdirectory( detail )
 
 simple_plugin(MyService "service" NO_INSTALL)
@@ -30,3 +33,4 @@ cet_test(PSTest_t HANDBUILT
   TEST_ARGS --rethrow-all -c PSTest_t.fcl
   DATAFILES fcl/PSTest_t.fcl
   )
+endif()

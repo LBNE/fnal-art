@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 art_make(LIBRARY_NAME art_Framework_IO_Sources
   SUBDIRS detail
   LIB_LIBRARIES art_Framework_Services_FileServiceInterfaces
@@ -10,3 +13,4 @@ art_make(LIBRARY_NAME art_Framework_IO_Sources
 
 install_headers(SUBDIRS detail)
 install_source(SUBDIRS detail)
+endif()

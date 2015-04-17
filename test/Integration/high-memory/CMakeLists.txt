@@ -1,3 +1,6 @@
+if (ALT_CMAKE)
+include(altCMakeLists.cmake)
+else()
 # Tests to expose certain instances of high memory use.
 
 art_dictionary()
@@ -33,3 +36,4 @@ cet_test(TestRemoveCachedProduct_r HANDBUILT
   DATAFILES fcl/TestRemoveCachedProduct_r.fcl
   TEST_PROPERTIES DEPENDS TestRemoveCachedProduct_w
 )
+endif()

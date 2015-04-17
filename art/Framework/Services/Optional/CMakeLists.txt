@@ -1,11 +1,14 @@
+if (ALT_CMAKE)
+include(altCMakeLists.cmake)
+else()
 set( art_Framework_Services_Optional_sources
   TFileDirectory.cc
   detail/TH1AddDirectorySentry.cc
 )
 
-if ( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" ) 
-  list( APPEND 
-    art_Framework_Services_Optional_sources 
+if ( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
+  list( APPEND
+    art_Framework_Services_Optional_sources
     MemoryTrackerLinux.cc
     SimpleMemoryCheckLinux.cc
     detail/LinuxProcMgr.cc
@@ -83,3 +86,4 @@ simple_plugin(TrivialFileTransfer "service")
 
 install_headers(SUBDIRS detail)
 install_source(SUBDIRS detail)
+endif()

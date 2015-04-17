@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 set(art_Framework_Principal_sources
   Actions.cc
   AssnsGroup.cc
@@ -35,3 +38,4 @@ art_make_library( LIBRARY_NAME art_Framework_Principal
 
 install_headers(SUBDIRS detail)
 install_source(SUBDIRS detail)
+endif()

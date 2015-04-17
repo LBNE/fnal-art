@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 art_dictionary(NO_INSTALL)
 
 # Library link requirements for tests here
@@ -73,3 +76,4 @@ foreach(cpp_test
     LIBRARIES ${default_test_libraries}
     )
 endforeach()
+endif()

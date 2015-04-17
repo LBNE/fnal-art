@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 # Tests of event shape consistency checking.
 art_dictionary()
 
@@ -56,3 +59,4 @@ set_tests_properties(ES_r02 PROPERTIES
   DEPENDS "ES_ws01;ES_ws02"
   PASS_REGULAR_EXPRESSION "---- MismatchedInputFiles BEGIN\n"
 )
+endif()

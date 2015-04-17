@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 # project name
 project(FWCoreMessageServicesTest)
 
@@ -22,3 +25,4 @@ foreach(file ${cpp_files} )
   add_executable( ${ename}  ${file} )
   add_test( ${ename} ${EXECUTABLE_OUTPUT_PATH}/${ename} )
 endforeach(file ${cpp_files} )
+endif()

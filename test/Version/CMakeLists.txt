@@ -8,4 +8,3 @@ link_libraries(  art_Version  )
 cet_test(GetReleaseVersion
   SOURCES ${CMAKE_CURRENT_BINARY_DIR}/test_GetReleaseVersion.cpp
   )
-

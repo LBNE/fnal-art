@@ -1,4 +1,7 @@
-2# project name
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
+# project name
 project(FrameworkCoreStubs)
 
 # version number
@@ -36,3 +39,4 @@ simple_plugin(TestResultAnalyzer  "module" NO_INSTALL )
 simple_plugin(ToyDoubleProducer  "module" NO_INSTALL )
 
 install ( TARGETS FrameworkCoreStubs DESTINATION ${flavorqual_dir}/lib )
+endif()

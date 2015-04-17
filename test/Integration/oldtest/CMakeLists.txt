@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 # project name
 project(FWCoreIntegrationTest)
 
@@ -40,3 +43,4 @@ endforeach(file ${cpp_files} )
 
 add_executable( TestFWCoreIntegrationStandalone testRunner.cpp standalone_t.cppunit.cc )
 add_test( TestFWCoreIntegrationStandalone ${EXECUTABLE_OUTPUT_PATH}/TestFWCoreIntegrationStandalone )
+endif()

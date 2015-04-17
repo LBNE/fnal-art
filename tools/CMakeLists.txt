@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 cet_script(checkClassVersion)
 
 # artmod is now in cetpkgsupport, but code generation is tested here.
@@ -34,3 +37,4 @@ foreach(type FileCatalogMetadataPlugin EmptyEventTimestampPlugin)
     )
   simple_plugin(ToolsTest${type} "plugin" NO_INSTALL art_Framework_Core)
 endforeach()
+endif()

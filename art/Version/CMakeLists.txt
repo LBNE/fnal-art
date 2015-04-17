@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 # project name
 project(art_Version)
 
@@ -10,3 +13,4 @@ art_make_library( LIBRARY_NAME art_Version
 
 install_headers()
 install_source()
+endif()

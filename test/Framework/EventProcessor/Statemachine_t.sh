@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 function usage() {
 cat 1>&2 <<EOF
 usage: ${0##*/} <reference-output> <passthrough-args>"
@@ -11,6 +12,9 @@ EOF
 }
 
 # Source functions.
+# Oh for **** sake - this is now in the art/Modules dir (because it
+# includes functionality refering to art) and must call cet_test_env
+# to add that to the PATH
 . cet_test_functions.sh
 
 # Process arguments.

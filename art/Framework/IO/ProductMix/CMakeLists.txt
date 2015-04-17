@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 
 art_make_library( LIBRARY_NAME art_Framework_IO_ProductMix
                   SOURCE MixHelper.cc ProdToProdMapBuilder.cc
@@ -20,3 +23,4 @@ art_dictionary(DICTIONARY_LIBRARIES art_Persistency_Provenance)
 
 install_headers()
 install_source()
+endif()

@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 art_make(LIB_LIBRARIES
   MF_MessageLogger
   MF_Utilities
@@ -15,3 +18,4 @@ art_make(LIB_LIBRARIES
 
 install_headers(SUBDIRS detail)
 install_source(SUBDIRS detail)
+endif()

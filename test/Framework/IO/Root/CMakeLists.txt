@@ -1,3 +1,6 @@
+if (ALT_CMAKE)
+include(altCMakeLists.cmake)
+else()
 link_libraries (art_Framework_IO_RootVersion)
 cet_test(GetFileFormatVersion SOURCES test_GetFileFormatVersion.cpp)
 
@@ -73,3 +76,4 @@ link_libraries( IORootOutput
 add_executable( TestRootOutput TestRootOutput.cpp )
 add_test( TestRootOutput ${EXECUTABLE_OUTPUT_PATH}/TestRootOutput )
 endif(0)
+endif()

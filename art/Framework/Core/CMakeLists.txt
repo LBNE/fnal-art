@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 foreach(ART_IPR_BASE_NAME FindOne FindMany)
   UNSET(ART_IPR_BY_PTR)
   SET(ART_IPR_CLASS_NAME ${ART_IPR_BASE_NAME})
@@ -33,3 +36,4 @@ art_make(
 
 install_headers(SUBDIRS detail)
 install_source(SUBDIRS detail)
+endif()

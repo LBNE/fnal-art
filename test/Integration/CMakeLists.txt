@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 set(CMAKE_MODULE_PATH
 	${CMAKE_MODULE_PATH}
   ${CMAKE_CURRENT_SOURCE_DIR}
@@ -1132,3 +1135,4 @@ add_subdirectory(event-shape)
 add_subdirectory(high-memory)
 
 include(legacy-tests)
+endif()

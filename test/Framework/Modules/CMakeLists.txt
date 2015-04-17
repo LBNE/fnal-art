@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 # project name
 project(FWCoreModulesTest)
 
@@ -8,4 +11,4 @@ link_libraries(  FWCoreModules  )
 add_executable( TestIntegration TestIntegration.cpp )
 
 add_test( TestIntegration ${EXECUTABLE_OUTPUT_PATH}/TestIntegration)
-
+endif()

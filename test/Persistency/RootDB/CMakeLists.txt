@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 set_source_files_properties(
   test3.cc
   tkeyvfs_noroot.cc
@@ -75,4 +78,4 @@ if ((${CMAKE_VERSION} VERSION_EQUAL "2.8") OR
     (${CMAKE_VERSION} VERSION_GREATER "2.8"))
   SET_TESTS_PROPERTIES(tkeyvfs_t_03r PROPERTIES DEPENDS tkeyvfs_t_03w)
 endif()
-
+endif()

@@ -1,3 +1,7 @@
+if (ALT_CMAKE)
+include(altCMakeLists.cmake)
+else()
+
 if ( ${CMAKE_SYSTEM_NAME} MATCHES "Linux")
   cet_make_exec( ProcTester
     SOURCE ProcTester.cc
@@ -19,4 +23,4 @@ cet_make_exec( ConstrainedMultimapTester
 cet_test( ConstrainedMultimap_t HANDBUILT
   TEST_EXEC ConstrainedMultimapTester
   )
-  
+endif()

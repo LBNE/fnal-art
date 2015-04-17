@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 
 art_dictionary(NO_INSTALL)
 
@@ -47,3 +50,4 @@ cet_test(RootClassMapping_t USE_BOOST_UNIT
   # (and associated ioread rules) should be fixed accordingly.
   TEST_PROPERTIES WILL_FAIL true
 )
+endif()

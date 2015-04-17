@@ -1,3 +1,7 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
+
 set(art_Persistency_RootDB_suorce
   MetaDataAccess.cc
   SQLErrMsg.cc
@@ -17,3 +21,4 @@ art_make_library( LIBRARY_NAME art_Persistency_RootDB
 
 install_headers()
 install_source()
+endif()

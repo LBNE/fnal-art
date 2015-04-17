@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 set(simple_tbb_tests
   tbb_init_t
   tbb_pfor_01_t
@@ -9,3 +12,4 @@ foreach(tbb_test ${simple_tbb_tests})
     LIBRARIES ${TBB}
     )
 endforeach()
+endif()

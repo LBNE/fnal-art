@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 # simple_plugin(RNGS_analyzer  "module" NO_INSTALL )
 # simple_plugin(RNGS_producer  "module" NO_INSTALL )
 
@@ -13,4 +16,4 @@ cet_test(UnitTestClient HANDBUILT
   fcl/test_fpc.fcl
   # fcl/messageDefaults.fcl
   )
-
+endif()

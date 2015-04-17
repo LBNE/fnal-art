@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 # Compile the exec (don't run). Yes, add_executable /
 # target_link_libraries is also fine but this is one command with a
 # uniform interface.
@@ -41,3 +44,4 @@ statemachine_test(09)
 statemachine_test(10)
 statemachine_test(11)
 statemachine_test(12 -m)
+endif()

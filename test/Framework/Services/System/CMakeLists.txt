@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 cet_test(ScheduleContext_t
   LIBRARIES
   art_Framework_Services_System_ScheduleContext_service
@@ -5,3 +8,4 @@ cet_test(ScheduleContext_t
   art_Utilities
   ${TBB}
   )
+endif()

@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 set(art_Framework_IO_Catalog_sources
   FileCatalog.cc
   InputFileCatalog.cc
@@ -22,3 +25,4 @@ install_headers()
 #         DESTINATION  ${product}/${version}/include/art/Framework/IO/Catalog )
 
 install_source()
+endif()

@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 # cet_test macro
 
 art_dictionary(NO_INSTALL)
@@ -62,3 +65,4 @@ cet_test(ScheduleID_t USE_BOOST_UNIT)
 
 cet_test(parent_path_t USE_BOOST_UNIT
   LIBRARIES art_Utilities)
+endif()

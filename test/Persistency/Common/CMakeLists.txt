@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 # project name
 project(DataFormatsCommonTest)
 
@@ -34,3 +37,4 @@ add_executable( ReflexTools_t ReflexTools_t.cpp )
 target_link_libraries( ReflexTools_t DataFormatsWrappedStdDictionaries_dict
                                      DataFormatsWrappedStdDictionaries_map  )
 add_test( ReflexTools_t ${EXECUTABLE_OUTPUT_PATH}/ReflexTools_t )
+endif()

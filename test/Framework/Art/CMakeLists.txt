@@ -1,3 +1,6 @@
+#if (ALT_CMAKE)
+#include(altCMakeLists.cmake)
+#else()
 link_libraries(
   art_Framework_Services_Registry
   art_Utilities
@@ -415,3 +418,4 @@ config_test_pass(FileCatalogOptions_05_w)
 
 # Compare output from FileCatalogOptions_05_w against reference.
 config_ref_test(FileCatalogOptions_05)
+#endif()

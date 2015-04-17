@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 # project name
 project(FWCoreServiceRegistryTest)
 
@@ -31,3 +34,4 @@ target_link_libraries( servicesmanager_order FWCoreServiceRegistryTestDummyServi
 
 add_test( testServiceRegistry   ${EXECUTABLE_OUTPUT_PATH}/testServiceRegistry)
 add_test( servicesmanager_order ${EXECUTABLE_OUTPUT_PATH}/servicesmanager_order)
+endif()

@@ -1,3 +1,6 @@
+if (ALT_CMAKE) 
+include(altCMakeLists.cmake)
+else()
 # cet_test macro
 
 art_dictionary(NO_INSTALL)
@@ -25,3 +28,4 @@ link_libraries(
 cet_test(eventprincipal_t USE_BOOST_UNIT)
 cet_test(Event_t USE_BOOST_UNIT)
 cet_test(GroupFactory_t USE_BOOST_UNIT)
+endif()
