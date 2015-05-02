@@ -7,7 +7,11 @@
 
 #include <cstdint>
 #include <memory>
-
+template<typename T, typename ...Args>
+std::unique_ptr<T> make_unique( Args&& ...args )
+{
+    return std::unique_ptr<T>( new T( std::forward<Args>(args)... ) );
+}
 namespace sqlite {
 
   using std::string;
@@ -88,10 +92,10 @@ namespace sqlite {
 
 extern "C" {
 
-  auto makePlugin( const std::string&,
+  std::unique_ptr<sqlite::sqlite3Plugin> makePlugin( const std::string&,
                    const fhicl::ParameterSet& pset) {
 
-    return std::make_unique<sqlite::sqlite3Plugin>( pset );
+    return ::make_unique<sqlite::sqlite3Plugin>( pset );
 
   }
 

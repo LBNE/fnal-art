@@ -16,7 +16,7 @@
 #include "art/Ntuple/sqlite_stringstream.h"
 #include "art/Utilities/Exception.h"
 
-using namespace std::string_literals;
+//using namespace std::string_literals;
 
 namespace sqlite
 {
@@ -99,7 +99,7 @@ namespace sqlite
                                 IT beginCol,
                                 IT endCol)
     {
-      std::string ddl("CREATE TABLE "s + tname + " ( "s);
+      std::string ddl(std::string("CREATE TABLE ") + tname + std::string(" ( "));
       BuildSQL<TUP, std::tuple_size<TUP>::value-1>::addMore(ddl, beginCol, endCol);
       ddl += " )";
       return ddl;
@@ -178,7 +178,7 @@ namespace sqlite
   }
 
   template<typename T>
-  decltype(auto) query_db(sqlite3* db, std::string const& ddl, bool const do_throw = true)
+  T query_db(sqlite3* db, std::string const& ddl, bool const do_throw = true)
   {
     detail::query_result res = detail::query( db, ddl );
     if ( res.data.empty() && do_throw ) throw art::Exception(art::errors::SQLExecutionError,"sqlite query_db unsuccessful");
@@ -186,8 +186,8 @@ namespace sqlite
   }
 
   template<typename T>
-  auto getUniqueEntries( sqlite3* db, const std::string& tname, const std::string& colname ) {
-    return query_db<std::vector<T>>( db, "select distinct "s+colname+" from "s+tname );
+  std::vector<T> getUniqueEntries( sqlite3* db, const std::string& tname, const std::string& colname ) {
+    return query_db<std::vector<T>>( db, std::string("select distinct ")+colname+std::string(" from ")+tname );
   }
 
   //=====================================================================
@@ -209,7 +209,7 @@ namespace sqlite
         deleteTable( db, tname );
       }
 
-      rowid = query_db<uint32_t>( db, "select count(*) from "s + tname );
+      rowid = query_db<uint32_t>( db, std::string("select count(*) from ") + tname );
 
     }
   }
@@ -219,12 +219,12 @@ namespace sqlite
 
   template<typename T = double>
   T min( sqlite3* db, const std::string& tname, const std::string& colname ) {
-    return query_db<T>( db, "select min("s+colname+") from "s + tname );
+    return query_db<T>( db, std::string("select min(")+colname+std::string(") from ") + tname );
   }
 
   template<typename T = double>
   T max( sqlite3* db, const std::string& tname, const std::string& colname ) {
-    return query_db<T>( db, "select max("s+colname+") from "s + tname );
+    return query_db<T>( db, std::string("select max(")+colname+std::string(") from ") + tname );
   }
 
   double mean  ( sqlite3* db, std::string const& tname, std::string const& colname );

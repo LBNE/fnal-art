@@ -4,13 +4,14 @@
 #include "art/Utilities/TypeID.h"
 
 #include <map>
+#include "boost/container/map.hpp"
 
 namespace art {
   namespace detail {
     class ServiceCacheEntry;
 
-    typedef  std::map< TypeID, detail::ServiceCacheEntry >  ServiceCache;
-
+    //typedef  std::map< TypeID, detail::ServiceCacheEntry >  ServiceCache;
+    typedef boost::container::map<TypeID, detail::ServiceCacheEntry> ServiceCache;
   }
 
 }

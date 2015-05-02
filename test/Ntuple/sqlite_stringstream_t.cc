@@ -3,16 +3,14 @@
 
 #include <string>
 
-using namespace std::string_literals;
-using namespace sqlite;
 
 int main() {
 
-  stringstream ss;
+  sqlite::stringstream ss;
 
   // put a few things in
   ss << "const char*"
-     << "std::string"s
+     << std::string("std::string")
      << 1
      << 2.4
      << 3.6f;

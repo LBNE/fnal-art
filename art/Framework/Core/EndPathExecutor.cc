@@ -33,7 +33,7 @@ bool art::EndPathExecutor::terminate() const
                                        // returns true if range is empty.
     std::all_of(outputWorkers_.cbegin(),
                 outputWorkers_.cend(),
-                [](auto& w){ return w->limitReached(); });
+                [](decltype(outputWorkers_)::value_type w){ return w->limitReached(); });
   if (rc) {
     mf::LogInfo("SuccessfulTermination")
       << "The job is terminating successfully because each output module\n"
@@ -96,44 +96,44 @@ void art::EndPathExecutor::openOutputFiles(FileBlock & fb)
 
 void art::EndPathExecutor::writeRun(RunPrincipal const & rp)
 {
-  doForAllEnabledOutputWorkers_([&rp](auto w){ w->writeRun(rp); });
+  doForAllEnabledOutputWorkers_([&rp](OutputWorker* w){ w->writeRun(rp); });
 }
 
 void art::EndPathExecutor::writeSubRun(SubRunPrincipal const & srp)
 {
-  doForAllEnabledOutputWorkers_([&srp](auto w){ w->writeSubRun(srp); });
+  doForAllEnabledOutputWorkers_([&srp](OutputWorker* w){ w->writeSubRun(srp); });
 }
 
 bool art::EndPathExecutor::shouldWeCloseOutput() const
 {
   return std::any_of(outputWorkers_.cbegin(),
                      outputWorkers_.cend(),
-                     [](auto& w){ return w->shouldWeCloseFile(); });
+                     [](decltype(outputWorkers_)::value_type w){ return w->shouldWeCloseFile(); });
 }
 
 void art::EndPathExecutor::respondToOpenInputFile(FileBlock const & fb)
 {
-  doForAllEnabledWorkers_([&fb](auto w){ w->respondToOpenInputFile(fb); });
+  doForAllEnabledWorkers_([&fb](Worker* w){ w->respondToOpenInputFile(fb); });
 }
 
 void art::EndPathExecutor::respondToCloseInputFile(FileBlock const & fb)
 {
-  doForAllEnabledWorkers_([&fb](auto w){ w->respondToCloseInputFile(fb); });
+  doForAllEnabledWorkers_([&fb](Worker* w){ w->respondToCloseInputFile(fb); });
 }
 
 void art::EndPathExecutor::respondToOpenOutputFiles(FileBlock const & fb)
 {
-  doForAllEnabledWorkers_([&fb](auto w){ w->respondToOpenOutputFiles(fb); });
+  doForAllEnabledWorkers_([&fb](Worker* w){ w->respondToOpenOutputFiles(fb); });
 }
 
 void art::EndPathExecutor::respondToCloseOutputFiles(FileBlock const & fb)
 {
-  doForAllEnabledWorkers_([&fb](auto w){ w->respondToCloseOutputFiles(fb); });
+  doForAllEnabledWorkers_([&fb](Worker* w){ w->respondToCloseOutputFiles(fb); });
 }
 
 void art::EndPathExecutor::beginJob()
 {
-  doForAllEnabledWorkers_([](auto w){ w->beginJob(); });
+  doForAllEnabledWorkers_([](Worker* w){ w->beginJob(); });
 }
 
 bool
@@ -173,5 +173,5 @@ setEndPathModuleEnabled(std::string const & label, bool enable)
 void
 art::EndPathExecutor::resetAll()
 {
-  doForAllEnabledWorkers_([](auto w){ w->reset(); });
+  doForAllEnabledWorkers_([](Worker* w){ w->reset(); });
 }

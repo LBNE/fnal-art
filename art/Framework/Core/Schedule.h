@@ -176,7 +176,7 @@ inline
 bool
 art::Schedule::runTriggerPaths_(typename T::MyPrincipal & ep)
 {
-  doForAllEnabledPaths_([&ep](auto p){ p->processOneOccurrence<T>(ep); });
+  doForAllEnabledPaths_([&ep](Path* p){ p->processOneOccurrence<T>(ep); });
   return triggerPathsInfo_.pathResults().accept();
 }
 

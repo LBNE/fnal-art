@@ -100,7 +100,7 @@ BOOST_AUTO_TEST_CASE(TestSignal1_t)
   std::string const test_text { "Test text" };
   boost::test_tools::output_test_stream os;
   BOOST_CHECK_NO_THROW(s.watch(sID,
-                               [&test_text](auto& x){ testCallback<0>(x, test_text); }));
+                               [&test_text](std::ostream& x){ testCallback<0>(x, test_text); }));
   BOOST_CHECK_NO_THROW(s.invoke(sID, os));
   BOOST_CHECK(os.is_equal(test_text));
 }
@@ -159,7 +159,7 @@ BOOST_AUTO_TEST_CASE(TestSignal1_All_t)
   TestSignal1 s(nSchedules);
   std::string const test_text { "Test text" };
   boost::test_tools::output_test_stream os;
-  BOOST_CHECK_NO_THROW(s.watchAll([&test_text](auto& x){
+  BOOST_CHECK_NO_THROW(s.watchAll([&test_text](std::ostream& x){
         testCallback<0>(x, test_text);
       }));
   BOOST_CHECK_NO_THROW(s.invoke(sID, os));

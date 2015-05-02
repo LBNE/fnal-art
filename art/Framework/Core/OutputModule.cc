@@ -118,7 +118,7 @@ doBeginJob()
 {
   selectProducts();
   beginJob();
-  cet::for_all(plugins_, [](auto& p){ p->doBeginJob(); });
+  cet::for_all(plugins_, [](decltype(plugins_)::value_type& p){ p->doBeginJob(); });
 }
 
 void
@@ -126,7 +126,7 @@ art::OutputModule::
 doEndJob()
 {
   endJob();
-  cet::for_all(plugins_, [](auto& p){ p->doEndJob(); });
+  cet::for_all(plugins_, [](decltype(plugins_)::value_type& p){ p->doEndJob(); });
 }
 
 
@@ -152,7 +152,7 @@ doEvent(EventPrincipal const & ep,
                        ep.id(),
                        trRef);
     // ... and invoke the plugins:
-    cet::for_all(plugins_, [&e](auto& p){ p->doCollectMetadata(e); });
+    cet::for_all(plugins_, [&e](decltype(plugins_)::value_type& p){ p->doCollectMetadata(e); });
     // Finish.
     updateBranchParents(ep);
     if (remainingEvents_ > 0) {
@@ -171,7 +171,7 @@ doBeginRun(RunPrincipal const & rp,
   FDEBUG(2) << "beginRun called\n";
   beginRun(rp);
   Run const r(const_cast<RunPrincipal &>(rp), moduleDescription_);
-  cet::for_all(plugins_, [&r](auto& p){ p->doBeginRun(r); });
+  cet::for_all(plugins_, [&r](decltype(plugins_)::value_type& p){ p->doBeginRun(r); });
   return true;
 }
 
@@ -184,7 +184,7 @@ doEndRun(RunPrincipal const & rp,
   FDEBUG(2) << "endRun called\n";
   endRun(rp);
   Run const r(const_cast<RunPrincipal &>(rp), moduleDescription_);
-  cet::for_all(plugins_, [&r](auto& p){ p->doEndRun(r); });
+  cet::for_all(plugins_, [&r](decltype(plugins_)::value_type& p){ p->doEndRun(r); });
   return true;
 }
 
@@ -205,7 +205,7 @@ doBeginSubRun(SubRunPrincipal const & srp,
   FDEBUG(2) << "beginSubRun called\n";
   beginSubRun(srp);
   SubRun const sr(const_cast<SubRunPrincipal &>(srp), moduleDescription_);
-  cet::for_all(plugins_, [&sr](auto& p){ p->doBeginSubRun(sr); });
+  cet::for_all(plugins_, [&sr](decltype(plugins_)::value_type& p){ p->doBeginSubRun(sr); });
   return true;
 }
 
@@ -218,7 +218,7 @@ doEndSubRun(SubRunPrincipal const & srp,
   FDEBUG(2) << "endSubRun called\n";
   endSubRun(srp);
   SubRun const sr(const_cast<SubRunPrincipal &>(srp), moduleDescription_);
-  cet::for_all(plugins_, [&sr](auto& p){ p->doEndSubRun(sr); });
+  cet::for_all(plugins_, [&sr](decltype(plugins_)::value_type& p){ p->doEndSubRun(sr); });
   return true;
 }
 
