@@ -41,6 +41,7 @@ set( art_Persistency_Provenance_libraries
   art_Utilities
   ${Boost_THREAD_LIBRARY}
   ${ROOT_CINTEX}
+  MF_MessageLogger
   )
 
 art_make_library( LIBRARY_NAME art_Persistency_Provenance

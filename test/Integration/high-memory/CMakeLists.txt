@@ -3,7 +3,7 @@ include(altCMakeLists.cmake)
 else()
 # Tests to expose certain instances of high memory use.
 
-art_dictionary()
+art_dictionary(NO_INSTALL)
 
 simple_plugin(HMSubRunProdProducer "module" NO_INSTALL)
 simple_plugin(HMRunProdProducer "module" NO_INSTALL)
